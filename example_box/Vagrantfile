@@ -1,0 +1,13 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "base"
+
+  config.vm.provider :vmck do |provider|
+    provider.vmck_url = 'http://vmck.example.org'
+    provider.private_key_path = './id_ed25519'
+  end
+
+end
