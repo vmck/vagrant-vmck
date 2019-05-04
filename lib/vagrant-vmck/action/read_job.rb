@@ -11,13 +11,15 @@ module VagrantPlugins
         end
 
         def call(env)
-          env[:vmck_job] = read_job(env[:vmck], env[:machine])
+          env[:vmck_job] = read_job(env[:vmck], env[:machine].id)
           @app.call(env)
         end
 
-        def read_job(client, machine)
-          return {'state': nil} if machine.id.nil?
-          return client.get(machine.id)
+        def read_job(client, job_id)
+          return {'state': nil} if job_id.nil?
+          job_state = client.get(job_id)
+          job_state['ready_for_ssh'] = !! job_state['ssh']
+          return job_state
         end
 
       end
