@@ -13,6 +13,7 @@ module VagrantPlugins
 
         def call(env)
           url = env[:machine].provider_config.vmck_url
+          abort("`vmck_url` is not set.") unless url
           env[:vmck] = Vmck::Client.new(url)
           @app.call(env)
         end
