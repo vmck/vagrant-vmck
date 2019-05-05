@@ -15,6 +15,7 @@ module VagrantPlugins
           env[:ui].info("Vmck destroying job #{id} ...")
 
           env[:vmck].stop(id)
+          env[:machine].id = nil
           env[:ui].info("Vmck job #{id} destroyed successfully")
 
           @app.call(env)
