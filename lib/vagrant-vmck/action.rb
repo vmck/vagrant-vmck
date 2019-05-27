@@ -21,6 +21,16 @@ module VagrantPlugins
           builder.use ConfigValidate
           builder.use ConnectVmck
           builder.use Create
+          builder.use provision
+        end
+      end
+
+      def self.provision
+        return Vagrant::Action::Builder.new.tap do |builder|
+          builder.use ConfigValidate
+          builder.use ConnectVmck
+          builder.use Provision
+          builder.use SyncedFolders
         end
       end
 
