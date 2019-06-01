@@ -2,7 +2,7 @@ FROM debian:stretch
 
 RUN set -e \
  && apt-get update \
- && apt-get install -y procps curl rsync kmod \
+ && apt-get install -y procps curl rsync kmod ssh \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN set -e \
