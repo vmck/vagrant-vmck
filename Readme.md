@@ -8,12 +8,11 @@
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```shell
-$ vagrant plugin install vagrant-vmck
-```
-
+1. [Install Vagrant](https://www.vagrantup.com/docs/installation/)
+2. Install the plugin:
+    ```shell
+    $ vagrant plugin install vagrant-vmck
+    ```
 
 ## Usage
 
