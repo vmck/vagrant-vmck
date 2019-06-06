@@ -22,6 +22,14 @@ See `example_box/Vagrantfile` for an example configuration.
 $ vagrant up --provider=vmck
 ```
 
+## Release
+1. Update `lib/vagrant-vmck/version.rb` and commit
+2. `git tag v1.2.3; git push --tags`
+3. `gem release`
+4. `docker build . --tag vmck/vagrant-vmck:1.2.3 --no-cache`
+5. `docker build . --tag vmck/vagrant-vmck` (should reuse the previous build)
+6. `docker push vmck/vagrant-vmck`
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
