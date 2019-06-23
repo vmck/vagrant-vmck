@@ -2,7 +2,6 @@
 
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 cd example_box
-echo $VMCK_URL
 
 set +e
 vagrant up --provider=vmck

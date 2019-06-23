@@ -29,9 +29,7 @@ steps:
     path: /var/run
   commands:
   - export VMCK_URL=http://$VMCK_IP:$VMCK_PORT
-  - docker run -e VMCK_URL=$VMCK_URL vagrant-vmck bash -c 'cd example_box; vagrant up; vagrant destroy -f'
-  - vagrant provision
-  - vagrant destroy -f
+  - docker run -e VMCK_URL=$VMCK_URL vagrant-vmck /src/run-test.sh
 
 services:
 - name: docker daemon in docker
