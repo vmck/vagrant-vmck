@@ -9,6 +9,8 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :vmck do |provider|
     provider.vmck_url = 'http://127.0.0.1:8000'
+    provider.memory = 1024
+    provider.cpus = 2
   end
 
 end

@@ -15,7 +15,11 @@ module VagrantPlugins
           client = env[:vmck]
 
           env[:ui].info("Vmck starting job ...")
-          id = client.create()['id'].to_s
+          options = {
+            'cpus': env[:machine].provider_config.cpus,
+            'memory': env[:machine].provider_config.memory,
+          }
+          id = client.create(options)['id'].to_s
           env[:machine].id = id
 
           env[:ui].info("Vmck waiting for job #{id} to be ready ...")
