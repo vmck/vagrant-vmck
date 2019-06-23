@@ -10,11 +10,15 @@ module VagrantPlugins
         @client = Faraday.new({ :url => url })
       end
 
-      def request(method, path)
+      def request(method, path, data=nil)
         @logger.info "Request: #{path}"
 
         result = @client.send(method) do |req|
           req.url(path)
+          if data
+            req.headers['Content-Type'] = 'application/json'
+            req.body = JSON.generate(data)
+          end
         end
 
         if method == :delete
@@ -35,8 +39,8 @@ module VagrantPlugins
 
       end
 
-      def create
-        request(:post, "/v0/jobs")
+      def create(options)
+        request(:post, "/v0/jobs", options)
       end
 
       def get(id)
