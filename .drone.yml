@@ -8,7 +8,7 @@ steps:
   - name: dockersock
     path: /var/run
   commands:
-  - sleep 5; until docker version; do sleep 5; done
+  - sleep 1; until docker version; do sleep 1; done
   - docker build . --tag vagrant-vmck
 
 - name: list plugins
