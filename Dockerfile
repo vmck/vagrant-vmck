@@ -1,4 +1,4 @@
-FROM debian:testing
+FROM ubuntu:bionic
 
 RUN set -e \
  && apt-get update -yqq \
