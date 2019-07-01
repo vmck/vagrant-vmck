@@ -1,0 +1,96 @@
+kind: pipeline
+name: test
+
+steps:
+- name: docker build
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run
+  commands:
+  - sleep 1; until docker version; do sleep 1; done
+  - docker build . --tag vagrant-vmck
+
+- name: list plugins
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run
+  commands:
+  - apk update -q && apk add -q grep
+  - docker run vagrant-vmck vagrant --version
+  - docker run vagrant-vmck vagrant plugin list
+  - docker run vagrant-vmck vagrant plugin list | grep -q vagrant-vmck
+
+- name: launch example VM
+  image: docker:dind
+  volumes:
+  - name: dockersock
+    path: /var/run
+  commands:
+  - export VMCK_URL=http://$VMCK_IP:$VMCK_PORT
+  - docker run -e VMCK_URL=$VMCK_URL vagrant-vmck /src/run-test.sh
+
+services:
+- name: docker daemon in docker
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+
+volumes:
+- name: dockersock
+  temp: {}
+
+---
+kind: pipeline
+name: publish
+
+trigger:
+  status:
+  - success
+  event:
+  - push
+  - tag
+
+depends_on:
+- test
+
+steps:
+- name: docker push branch ${DRONE_COMMIT_BRANCH}
+  image: plugins/docker
+  settings:
+    repo: vmck/vagrant-vmck
+    tags: ${DRONE_COMMIT_BRANCH}
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+    - push
+
+- name: docker push autotag + latest
+  image: plugins/docker
+  settings:
+    repo: vmck/vagrant-vmck
+    auto_tag: true
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+---
+kind: secret
+name: docker_username
+get:
+  path: liquid/ci/drone.docker
+  name: username
+
+---
+kind: secret
+name: docker_password
+get:
+  path: liquid/ci/drone.docker
+  name: password
