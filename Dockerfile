@@ -1,14 +1,13 @@
-FROM ubuntu:bionic
+FROM alpine:3.10.1
 
-RUN set -e \
- && apt-get update -yqq \
- && apt-get install -yqq git procps curl rsync kmod ssh ruby ruby-dev build-essential \
- && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apk add ruby ruby-dev ruby-bundler ruby-json rsync gcc g++ make git libc-dev openssh bash
 
-RUN set -e \
- && curl -O https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.deb \
- && dpkg -i vagrant_2.2.4_x86_64.deb \
- && rm vagrant_2.2.4_x86_64.deb \
+ENV PATH=$PATH:/vagrant/exec
+
+RUN git clone https://github.com/hashicorp/vagrant.git \
+ && cd vagrant \
+ && bundle install \
+ && bundle --binstubs exec \
  && vagrant --version
 
 RUN mkdir /src
