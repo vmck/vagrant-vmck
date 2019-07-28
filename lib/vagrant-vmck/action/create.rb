@@ -18,6 +18,7 @@ module VagrantPlugins
           options = {
             'cpus': env[:machine].provider_config.cpus,
             'memory': env[:machine].provider_config.memory,
+            'image_path': env[:machine].provider_config.image_path,
           }
           id = client.create(options)['id'].to_s
           env[:machine].id = id
