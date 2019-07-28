@@ -6,6 +6,7 @@ ENV PATH=$PATH:/vagrant/exec
 
 RUN git clone https://github.com/hashicorp/vagrant.git \
  && cd vagrant \
+ && git checkout v2.2.4 \
  && bundle install \
  && bundle --binstubs exec \
  && vagrant --version
