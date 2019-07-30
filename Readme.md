@@ -16,10 +16,16 @@
 
 ## Usage
 
-See `example_box/Vagrantfile` for an example configuration.
+See `examples/box/Vagrantfile` for an example configuration.
 
 ```shell
 $ vagrant up --provider=vmck
+```
+
+The vmck provider is also packaged as a docker image:
+
+```shell
+./examples/docker.sh --dev --env VMCK_URL=http://10.66.60.1:9995
 ```
 
 ## Release
