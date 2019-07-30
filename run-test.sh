@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 cd "$( dirname "${BASH_SOURCE[0]}" )"
-cd example_box
+cd examples/box
 
 set +e
 vagrant up --provider=vmck
