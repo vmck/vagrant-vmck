@@ -15,5 +15,9 @@ RUN mkdir /src
 WORKDIR /src
 ADD . .
 
-RUN gem build vagrant-vmck.gemspec
-RUN vagrant plugin install vagrant-vmck-*.gem
+RUN set -e \
+ && gem build vagrant-vmck.gemspec \
+ && vagrant plugin install vagrant-vmck-*.gem \
+ && gem_dir="$(ls -d /root/.vagrant.d/gems/*/gems/vagrant-vmck-*)" \
+ && rm -rf "$gem_dir" \
+ && ln -s /src "$gem_dir"

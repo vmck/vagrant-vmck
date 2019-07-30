@@ -10,8 +10,7 @@ while [[ $# -gt 0 ]]; do
   shift
   case "$arg" in
     "--dev")
-      options+=('--volume' "$(pwd)/lib:/src/lib")
-      options+=('--volume' "$(pwd)/examples:/src/examples")
+      options+=('--volume' "$(pwd):/src")
       ;;
     "--env")
       options+=('--env' "$1")
