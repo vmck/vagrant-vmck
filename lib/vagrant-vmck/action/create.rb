@@ -19,6 +19,7 @@ module VagrantPlugins
             'cpus': env[:machine].provider_config.cpus,
             'memory': env[:machine].provider_config.memory,
             'image_path': env[:machine].provider_config.image_path,
+            'usbstick': env[:machine].provider_config.usbstick,
           }
           id = client.create(options)['id'].to_s
           env[:machine].id = id
