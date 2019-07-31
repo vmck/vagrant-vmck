@@ -9,11 +9,16 @@ RUN git clone https://github.com/hashicorp/vagrant.git \
  && git checkout v2.2.4 \
  && bundle install \
  && bundle --binstubs exec \
- && vagrant --version
+ && vagrant --version \
+ && vagrant plugin install vagrant-env
 
 RUN mkdir /src
 WORKDIR /src
 ADD . .
 
-RUN gem build vagrant-vmck.gemspec
-RUN vagrant plugin install vagrant-vmck-*.gem
+RUN set -e \
+ && gem build vagrant-vmck.gemspec \
+ && vagrant plugin install vagrant-vmck-*.gem \
+ && gem_dir="$(ls -d /root/.vagrant.d/gems/*/gems/vagrant-vmck-*)" \
+ && rm -rf "$gem_dir" \
+ && ln -s /src "$gem_dir"
