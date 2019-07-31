@@ -9,7 +9,8 @@ RUN git clone https://github.com/hashicorp/vagrant.git \
  && git checkout v2.2.4 \
  && bundle install \
  && bundle --binstubs exec \
- && vagrant --version
+ && vagrant --version \
+ && vagrant plugin install vagrant-env
 
 RUN mkdir /src
 WORKDIR /src
