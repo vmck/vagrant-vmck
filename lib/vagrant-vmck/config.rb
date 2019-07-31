@@ -6,7 +6,7 @@ module VagrantPlugins
       attr_accessor :memory
       attr_accessor :cpus
       attr_accessor :image_path
-      attr_accessor :usbstick
+      attr_accessor :storage
 
       def initialize
         @vmck_url = UNSET_VALUE
@@ -14,7 +14,7 @@ module VagrantPlugins
         @memory = UNSET_VALUE
         @cpus = UNSET_VALUE
         @image_path = UNSET_VALUE
-        @usbstick = UNSET_VALUE
+        @storage = UNSET_VALUE
       end
 
       def finalize!
@@ -23,7 +23,7 @@ module VagrantPlugins
         @memory = 512 if @memory == UNSET_VALUE
         @cpus = 1 if @cpus == UNSET_VALUE
         @image_path = 'imgbuild-master.qcow2.tar.gz' if @image_path == UNSET_VALUE
-        @usbstick = nil if @usbstick == UNSET_VALUE
+        @storage = nil if @storage == UNSET_VALUE
       end
 
     end
