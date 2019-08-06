@@ -31,7 +31,7 @@ The vmck provider is also packaged as a docker image:
 ## Release
 1. Update `lib/vagrant-vmck/version.rb` and commit
 2. `git tag v1.2.3; git push --tags`
-3. `gem release`
+3. `gem install gem-release; gem release`
 4. `docker build . --tag vmck/vagrant-vmck:1.2.3 --no-cache`
 5. `docker build . --tag vmck/vagrant-vmck` (should reuse the previous build)
 6. `docker push vmck/vagrant-vmck`
