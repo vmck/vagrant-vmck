@@ -43,6 +43,10 @@ module VagrantPlugins
         request(:post, "/v0/jobs", options)
       end
 
+      def connect(token)
+        request(:post, "/v0/connect", token)
+      end
+
       def get(id)
         request(:get, "/v0/jobs/#{id}")
       end

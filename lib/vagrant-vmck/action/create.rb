@@ -22,7 +22,20 @@ module VagrantPlugins
             'storage': env[:machine].provider_config.storage,
             'name': env[:machine].provider_config.name,
           }
-          id = client.create(options)['id'].to_s
+          id = client.connect(token)['id'].to_s
+          env[:ui].info("Connected to job #{id}.")
+
+          if id == -1
+            env[:ui].info("Vmck starting job ...")
+            options = {
+              'cpus': env[:machine].provider_config.cpus,
+              'memory': env[:machine].provider_config.memory,
+              'image_path': env[:machine].provider_config.image_path,
+              'storage': env[:machine].provider_config.storage,
+            }
+            id = client.create(options)['id'].to_s
+          end
+
           env[:machine].id = id
 
           env[:ui].info("Vmck waiting for job #{id} to be ready ...")
