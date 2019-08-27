@@ -22,8 +22,11 @@ module VagrantPlugins
             'storage': env[:machine].provider_config.storage,
             'name': env[:machine].provider_config.name,
           }
-          id = client.connect(token)['id'].to_s
-          env[:ui].info("Connected to job #{id}.")
+          begin
+            id = client.connect(token)['id'].to_s
+          rescue JSON::ParserError
+            id = -1
+          end
 
           if id == -1
             env[:ui].info("Vmck starting job ...")
@@ -34,6 +37,8 @@ module VagrantPlugins
               'storage': env[:machine].provider_config.storage,
             }
             id = client.create(options)['id'].to_s
+          else
+            env[:ui].info("Connected to job #{id}.")
           end
 
           env[:machine].id = id
