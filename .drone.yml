@@ -29,7 +29,8 @@ steps:
     path: /var/run
   commands:
   - export VMCK_URL=http://$VMCK_IP:$VMCK_PORT
-  - docker run -e VMCK_URL=$VMCK_URL vagrant-vmck bash /src/run-test.sh
+  - export JOB_NAME="drone $DRONE_REPO:$DRONE_BRANCH"
+  - docker run --env JOB_NAME --env VMCK_URL vagrant-vmck bash /src/run-test.sh
 
 services:
 - name: docker daemon in docker
