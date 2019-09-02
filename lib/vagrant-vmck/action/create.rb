@@ -14,31 +14,18 @@ module VagrantPlugins
         def call(env)
           client = env[:vmck]
 
-          env[:ui].info("Vmck starting job ...")
-          options = {
-            'cpus': env[:machine].provider_config.cpus,
-            'memory': env[:machine].provider_config.memory,
-            'image_path': env[:machine].provider_config.image_path,
-            'storage': env[:machine].provider_config.storage,
-            'name': env[:machine].provider_config.name,
-          }
-          begin
-            id = client.connect(token)['id'].to_s
-          rescue JSON::ParserError
-            id = -1
-          end
-
-          if id == -1
+          if ENV['VMCK_JOB_ID'].nil?
             env[:ui].info("Vmck starting job ...")
             options = {
               'cpus': env[:machine].provider_config.cpus,
               'memory': env[:machine].provider_config.memory,
               'image_path': env[:machine].provider_config.image_path,
               'storage': env[:machine].provider_config.storage,
+              'name': env[:machine].provider_config.name,
             }
             id = client.create(options)['id'].to_s
           else
-            env[:ui].info("Connected to job #{id}.")
+            id = ENV['VMCK_JOB_ID'].to_s
           end
 
           env[:machine].id = id
