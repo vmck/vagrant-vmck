@@ -20,6 +20,7 @@ module VagrantPlugins
             'memory': env[:machine].provider_config.memory,
             'image_path': env[:machine].provider_config.image_path,
             'storage': env[:machine].provider_config.storage,
+            'name': env[:machine].provider_config.name,
           }
           id = client.create(options)['id'].to_s
           env[:machine].id = id
