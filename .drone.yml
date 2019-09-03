@@ -29,7 +29,7 @@ steps:
     path: /var/run
   commands:
   - export VMCK_URL=http://$VMCK_IP:$VMCK_PORT
-  - export JOB_NAME="drone $DRONE_REPO:$DRONE_BRANCH"
+  - export JOB_NAME="drone $DRONE_REPO:$DRONE_BRANCH#$DRONE_BUILD_NUMBER"
   - docker run --env JOB_NAME --env VMCK_URL vagrant-vmck bash /src/run-test.sh
 
 services:
