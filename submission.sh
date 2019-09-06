@@ -2,8 +2,8 @@
 
 trap "vagrant destroy -f" EXIT
 
-curl -X GET ${DOWNLOAD_URL} > archive.zip
-unzip archive.zip
+curl -X GET ${DOWNLOAD_ARCHIVE_URL} > submission.zip
+curl -X GET ${DOWNLOAD_SCRIPT_URL} > checker.sh
 vagrant up
 vagrant ssh -- < checker.sh > result.out
 data="$(base64 result.out)"
