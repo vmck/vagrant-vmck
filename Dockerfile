@@ -20,5 +20,3 @@ RUN set -e \
  && ln -s /src "$gem_dir" \
  && apt-get purge -y wget ruby-dev \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-CMD exec ./submission.sh
