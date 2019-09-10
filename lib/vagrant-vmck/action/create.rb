@@ -25,7 +25,8 @@ module VagrantPlugins
             }
             id = client.create(options)['id'].to_s
           else
-            id = ENV['VMCK_JOB_ID'].to_s
+            id = ENV['VMCK_JOB_ID']
+            env[:ui].info("Vmck using existing job #{id}")
           end
 
           env[:machine].id = id
