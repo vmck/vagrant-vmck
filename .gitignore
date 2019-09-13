@@ -1,5 +1,5 @@
 /.bundle/
 /Gemfile.lock
 .vagrant
-Vagrantfile
+/Vagrantfile
 !example_box/Vagrantfile
