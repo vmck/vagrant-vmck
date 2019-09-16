@@ -4,8 +4,8 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 trap "vagrant destroy -f" EXIT
 
-curl "${ARCHIVE_URL}" -o submission.zip
-curl "${SCRIPT_URL}" -o checker.sh
+curl "${VMCK_ARCHIVE_URL}" -o submission.zip
+curl "${VMCK_SCRIPT_URL}" -o checker.sh
 
 vagrant up
 vagrant ssh -- < checker.sh > result.out
