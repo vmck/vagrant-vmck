@@ -12,8 +12,7 @@ vagrant ssh -- < checker.sh > result.out
 
 data="$(base64 result.out)"
 JSON_STRING=$(jq -n \
-                 --arg tok "$SUBMISSION_ID" \
                  --arg out "$data" \
                  '{token: $tok, output: $out,}')
-curl -X POST "${INTERFACE_ADDRESS}/done/" -d "$JSON_STRING" \
+curl -X POST "${VMCK_CALLBACK_URL}" -d "$JSON_STRING" \
      --header "Content-Type: application/json"
