@@ -14,15 +14,21 @@ module VagrantPlugins
         def call(env)
           client = env[:vmck]
 
-          env[:ui].info("Vmck starting job ...")
-          options = {
-            'cpus': env[:machine].provider_config.cpus,
-            'memory': env[:machine].provider_config.memory,
-            'image_path': env[:machine].provider_config.image_path,
-            'storage': env[:machine].provider_config.storage,
-            'name': env[:machine].provider_config.name,
-          }
-          id = client.create(options)['id'].to_s
+          if ENV['VMCK_JOB_ID'].nil?
+            env[:ui].info("Vmck starting job ...")
+            options = {
+              'cpus': env[:machine].provider_config.cpus,
+              'memory': env[:machine].provider_config.memory,
+              'image_path': env[:machine].provider_config.image_path,
+              'storage': env[:machine].provider_config.storage,
+              'name': env[:machine].provider_config.name,
+            }
+            id = client.create(options)['id'].to_s
+          else
+            id = ENV['VMCK_JOB_ID']
+            env[:ui].info("Vmck using existing job #{id}")
+          end
+
           env[:machine].id = id
 
           env[:ui].info("Vmck waiting for job #{id} to be ready ...")

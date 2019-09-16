@@ -7,7 +7,7 @@ ADD . .
 
 RUN set -e \
  && apt-get update -q \
- && apt-get install -yq wget git procps kmod rsync ruby-dev \
+ && apt-get install -yq wget git procps kmod rsync ruby-dev curl jq\
  && wget https://releases.hashicorp.com/vagrant/2.2.4/vagrant_2.2.4_x86_64.deb \
  && dpkg -i vagrant_2.2.4_x86_64.deb \
  && rm vagrant_2.2.4_x86_64.deb \
