@@ -33,7 +33,6 @@ module VagrantPlugins
 
           env[:ui].info("Vmck waiting for job #{id} to be ready ...")
           retryable(:tries => 3600, :sleep => 1) do
-            env[:ui].info("Trying....")
             next if env[:interrupted]
             raise 'not ready' unless client.get(id)['ssh']
           end
