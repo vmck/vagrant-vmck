@@ -20,6 +20,6 @@ JSON_STRING=$(jq -n \
                  --arg out "$stdout" \
                  --arg err "$stderr" \
                  --arg code $exit_code \
-                 '{stdout: $out, stderr: $err, exit_code: $code},')
+                 '{stdout: $out, stderr: $err, exit_code: $code,}')
 curl -X POST "${VMCK_CALLBACK_URL}" -d "$JSON_STRING" \
      --header "Content-Type: application/json"
