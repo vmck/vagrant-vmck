@@ -6,8 +6,8 @@ Vagrant.configure("2") do |config|
     end
 
     config.nfs.functional = false
-    config.vm.provision 'shell', inline: 'mv /vagrant/submission.zip .; \
-                                            unzip submission.zip; \
+    config.vm.provision 'shell', inline: 'mv /vagrant/archive.zip .; \
+                                            unzip archive.zip; \
                                             chown -R vagrant:vagrant .'
     config.vm.provider :vmck do |vmck|
         vmck.vmck_url = ENV['VMCK_URL']
