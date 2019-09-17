@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
     end
 
     config.nfs.functional = false
-    config.vm.provision 'shell', inline: 'unzip archive.zip'
+    config.vm.provision 'shell', inline: 'cd /vagrant; chmod +x script.sh; unzip archive.zip'
     config.vm.provider :vmck do |vmck|
         vmck.vmck_url = ENV['VMCK_URL']
     end

@@ -12,9 +12,9 @@ touch reuslt.err
 vagrant up
 set +e
 vagrant ssh -- 'cd /vagrant; ./script.sh' 1> result.out 2> result.err
+exit_code=$?
 set -e
 
-exit_code=$?
 stdout="$(base64 result.out)"
 stderr="$(base64 reuslt.err)"
 
