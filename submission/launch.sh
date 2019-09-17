@@ -7,6 +7,8 @@ trap "vagrant destroy -f" EXIT
 curl "${VMCK_ARCHIVE_URL}" -o archive.zip
 curl "${VMCK_SCRIPT_URL}" -o script.sh
 
+touch reuslt.err
+
 vagrant up
 vagrant ssh -- < script.sh 1> result.out 2> result.err
 
