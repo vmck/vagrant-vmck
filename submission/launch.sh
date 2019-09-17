@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -ex
 
 cd "$( dirname "${BASH_SOURCE[0]}" )"
 
@@ -10,7 +10,9 @@ curl "${VMCK_SCRIPT_URL}" -o script.sh
 touch reuslt.err
 
 vagrant up
-vagrant ssh -- < script.sh 1> result.out 2> result.err
+set +e
+vagrant ssh -- 'cd /vagrant; ./script.sh' 1> result.out 2> result.err
+set -e
 
 exit_code=$?
 stdout="$(base64 result.out)"
