@@ -10,10 +10,11 @@ curl "${VMCK_SCRIPT_URL}" -o script.sh
 touch reuslt.err
 
 vagrant up
+(
 set +e
 vagrant ssh -- 'cd /vagrant; ./script.sh' 1> result.out 2> result.err
+)
 exit_code=$?
-set -e
 
 stdout="$(base64 result.out)"
 stderr="$(base64 reuslt.err)"
