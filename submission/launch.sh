@@ -13,9 +13,10 @@ vagrant up
 (
 set +e
 vagrant ssh -- 'cd /vagrant; ./script.sh' 1> result.out 2> result.err
+echo $? > result.exit_code
 )
-exit_code=$?
 
+exit_code=$(cat result.exit_code)
 stdout="$(base64 result.out)"
 stderr="$(base64 result.err)"
 
