@@ -4,16 +4,26 @@ cd "$( dirname "${BASH_SOURCE[0]}" )"
 
 trap "vagrant destroy -f" EXIT
 
-curl "${ARCHIVE_URL}" -o submission.zip
-curl "${SCRIPT_URL}" -o checker.sh
+curl "${VMCK_ARCHIVE_URL}" -o archive.zip
+curl "${VMCK_SCRIPT_URL}" -o script.sh
+
+chmod +x script.sh
 
 vagrant up
-vagrant ssh -- < checker.sh > result.out
+(
+set +e
+vagrant ssh -- 'cd /vagrant; ./script.sh' 1> result.out 2> result.err
+echo $? > result.exit_code
+)
 
-data="$(base64 result.out)"
-JSON_STRING=$(jq -n \
-                 --arg tok "$SUBMISSION_ID" \
-                 --arg out "$data" \
-                 '{token: $tok, output: $out,}')
-curl -X POST "${INTERFACE_ADDRESS}/done/" -d "$JSON_STRING" \
+exit_code=$(cat result.exit_code)
+stdout="$(base64 result.out)"
+stderr="$(base64 result.err)"
+
+RESULT_JSON=$(jq -n \
+                 --arg out "$stdout" \
+                 --arg err "$stderr" \
+                 --arg code $exit_code \
+                 '{stdout: $out, stderr: $err, exit_code: $code,}')
+curl -X POST "${VMCK_CALLBACK_URL}" -d "$RESULT_JSON" \
      --header "Content-Type: application/json"
