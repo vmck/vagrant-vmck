@@ -24,6 +24,7 @@ RESULT_JSON=$(jq -n \
                  --arg out "$stdout" \
                  --arg err "$stderr" \
                  --arg code $exit_code \
-                 '{stdout: $out, stderr: $err, exit_code: $code,}')
+                 --arg auth_token "$VMCK_AUTH" \
+                 '{stdout: $out, stderr: $err, exit_code: $code, auth: $auth_token,}')
 curl -X POST "${VMCK_CALLBACK_URL}" -d "$RESULT_JSON" \
      --header "Content-Type: application/json"
