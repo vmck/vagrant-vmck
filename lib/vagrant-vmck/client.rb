@@ -1,3 +1,4 @@
+require 'log4r'
 require 'faraday'
 require 'json'
 
@@ -6,7 +7,7 @@ module VagrantPlugins
     class Client
 
       def initialize(url)
-        @logger = Log4r::Logger.new('vmck::client')
+        @logger = Log4r::Logger.new("vagrant_vmck::client")
         @client = Faraday.new({ :url => url })
       end
 
