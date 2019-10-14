@@ -6,6 +6,7 @@ trap "vagrant destroy -f" EXIT
 
 curl "${VMCK_ARCHIVE_URL}" -o archive.zip
 curl "${VMCK_SCRIPT_URL}" -o script.sh
+curl "${VMCK_ARTIFACT_URL}" -o artifact.zip
 
 chmod +x script.sh
 
