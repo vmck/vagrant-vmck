@@ -22,6 +22,7 @@ module VagrantPlugins
               'image_path': env[:machine].provider_config.image_path,
               'storage': env[:machine].provider_config.storage,
               'name': env[:machine].provider_config.name,
+              'restrict_network': env[:machine].provider_config.restrict_network,
             }
             id = client.create(options)['id'].to_s
           else

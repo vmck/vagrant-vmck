@@ -18,6 +18,7 @@ module VagrantPlugins
           req.url(path)
           if data
             req.headers['Content-Type'] = 'application/json'
+            @logger.info "Request body: #{data}"
             req.body = JSON.generate(data)
           end
         end
