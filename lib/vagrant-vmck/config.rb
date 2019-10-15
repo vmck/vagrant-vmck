@@ -8,6 +8,7 @@ module VagrantPlugins
       attr_accessor :image_path
       attr_accessor :storage
       attr_accessor :name
+      attr_accessor :restrict_network
 
       def initialize
         @vmck_url = UNSET_VALUE
@@ -17,6 +18,7 @@ module VagrantPlugins
         @image_path = UNSET_VALUE
         @storage = UNSET_VALUE
         @name = UNSET_VALUE
+        @restrict_network = UNSET_VALUE
       end
 
       def finalize!
@@ -27,6 +29,7 @@ module VagrantPlugins
         @image_path = 'imgbuild-master.qcow2.tar.gz' if @image_path == UNSET_VALUE
         @storage = nil if @storage == UNSET_VALUE
         @name = 'default' if @name == UNSET_VALUE
+        @restrict_network = false if @restrict_network == UNSET_VALUE
       end
 
     end
