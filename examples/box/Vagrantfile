@@ -20,6 +20,7 @@ Vagrant.configure("2") do |config|
     vmck.vmck_url = ENV['VMCK_URL']
     vmck.memory = 512
     vmck.cpus = 1
+    vmck.restrict_network = true
     vmck.storage = ENV['VMCK_STORAGE']
     vmck.name = ENV['VMCK_NAME']
   end
