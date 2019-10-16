@@ -17,14 +17,11 @@ vagrant ssh -- 'cd /vagrant; ./script.sh' 1> result.out 2> result.err
 echo $? > result.exit_code
 )
 
-exit_code=$(cat result.exit_code)
-stdout="$(base64 result.out)"
-stderr="$(base64 result.err)"
+base64 result.out > stdout.b64
+base64 result.err > stderr.b64
+cat stdout.b64 stderr.64 result.exit_code | tr '\n' ' ' > out.tmp
 
-RESULT_JSON=$(jq -n \
-                 --arg out "$stdout" \
-                 --arg err "$stderr" \
-                 --arg code $exit_code \
-                 '{stdout: $out, stderr: $err, exit_code: $code,}')
-curl -X POST "${VMCK_CALLBACK_URL}" -d "$RESULT_JSON" \
+awk '{print "{\"stdout\":\""$1"\",\"stderr\":\""$2"\",\"exit_code\":\""$3"\"}"}' out.tmp > out.json
+
+curl -X POST "${VMCK_CALLBACK_URL}" -d @out.json \
      --header "Content-Type: application/json"
