@@ -18,13 +18,18 @@ echo $? > result.exit_code
 )
 
 exit_code=$(cat result.exit_code)
-stdout="$(base64 result.out)"
-stderr="$(base64 result.err)"
+base64 result.out > stdout.tmp
+cat stdout.tmp | tr -d '\n' > stdout
 
-RESULT_JSON=$(jq -n \
-                 --arg out "$stdout" \
-                 --arg err "$stderr" \
-                 --arg code $exit_code \
-                 '{stdout: $out, stderr: $err, exit_code: $code,}')
-curl -X POST "${VMCK_CALLBACK_URL}" -d "$RESULT_JSON" \
+base64 result.err > stderr.tmp
+cat stderr.tmp | tr -d '\n' > stderr
+
+
+jq -n \
+    --rawfile out stdout \
+    --rawfile err stderr \
+    --arg code $exit_code \
+    '{stdout: $out, stderr: $err, exit_code: $code,}' > out.json
+
+curl -X POST "${VMCK_CALLBACK_URL}" -d @out.json \
      --header "Content-Type: application/json"
