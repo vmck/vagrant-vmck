@@ -54,10 +54,6 @@ trigger:
   event:
   - push
   - tag
-  when:
-    branch:
-      exclude:
-      - dependabot/*
 
 depends_on:
 - test
@@ -75,6 +71,9 @@ steps:
   when:
     event:
     - push
+    branch:
+      exclude:
+      - dependabot/*
 
 - name: docker push autotag + latest
   image: plugins/docker
