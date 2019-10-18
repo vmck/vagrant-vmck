@@ -54,6 +54,10 @@ trigger:
   event:
   - push
   - tag
+  when:
+    branch:
+      exclude:
+      - dependabot/*
 
 depends_on:
 - test
