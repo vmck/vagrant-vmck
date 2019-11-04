@@ -29,6 +29,20 @@ The vmck provider is also packaged as a docker image:
 ```
 
 
+## Development
+
+You can test the code using `bundle exec`:
+
+```shell
+export VMCK_URL=http://localhost:10000
+export VMCK_NAME="example"
+export VAGRANT_CWD=examples/box
+
+bundle install
+bundle exec vagrant up
+```
+
+
 ## Release
 
 1. Update `lib/vagrant-vmck/version.rb` and commit
