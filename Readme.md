@@ -28,13 +28,30 @@ The vmck provider is also packaged as a docker image:
 ./examples/docker.sh --dev --env VMCK_URL=http://10.66.60.1:9995
 ```
 
+
+## Development
+
+You can test the code using `bundle exec`:
+
+```shell
+export VMCK_URL=http://localhost:10000
+export VMCK_NAME="example"
+export VAGRANT_CWD=examples/box
+
+bundle install
+bundle exec vagrant up
+```
+
+
 ## Release
+
 1. Update `lib/vagrant-vmck/version.rb` and commit
 2. `git tag v1.2.3; git push --tags`
-3. `gem install gem-release; gem release`
-4. `docker build . --tag vmck/vagrant-vmck:1.2.3 --no-cache`
-5. `docker build . --tag vmck/vagrant-vmck` (should reuse the previous build)
-6. `docker push vmck/vagrant-vmck`
+
+The [gempush workflow](.github/workflows/gempush.yml) takes care of the rest,
+see it work away in the [actions
+tab](https://github.com/vmck/vagrant-vmck/actions).
+
 
 ## License
 
