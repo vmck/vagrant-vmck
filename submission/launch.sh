@@ -27,4 +27,5 @@ jq -n \
     '{stdout: $out, exit_code: $code,}' > out.json
 
 curl -X POST "${VMCK_CALLBACK_URL}" -d @out.json \
-     --header "Content-Type: application/json"
+     --header "Content-Type: application/json" \
+     --retry 20 --retry-connrefused
