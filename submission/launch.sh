@@ -10,12 +10,35 @@ curl "${VMCK_ARTIFACT_URL}" -o artifact.zip
 
 chmod +x script.sh
 
-vagrant up
-(
-set +e
-vagrant ssh -- 'cd /vagrant; ./script.sh' &> result.out
-echo $? > result.exit_code
-)
+unzip -t archive.zip
+test_archive=$?
+unzip -t artifact.zip
+test_artifact=$?
+
+
+if [ $test_archive -ne 0 ] && [ $test_artifact -ne 0]
+then
+    vagrant up
+    (
+    set +e
+    vagrant ssh -- 'cd /vagrant; ./script.sh' &> result.out
+    echo $? > result.exit_code
+    )
+else
+    echo "1" > result.exit_code
+    echo "The following downloaded archives are corrupt or incomplete:" > result.out
+
+    if [ $test_archive -ne 0 ]
+    then
+        echo "--> archive.zip" >> result.out
+        stat archive.zip >> result.out
+    fi
+    if [ $test_artifact -ne 0 ]
+    then
+        echo "--> artifact.zip" >> result.out
+        stat artifact.zip >> result.out
+    fi
+fi
 
 exit_code=$(cat result.exit_code)
 base64 result.out > stdout.tmp
