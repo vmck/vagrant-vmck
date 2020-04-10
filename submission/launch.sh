@@ -15,8 +15,7 @@ test_archive=$?
 unzip -t artifact.zip
 test_artifact=$?
 
-
-if [ $test_archive -ne 0 ] && [ $test_artifact -ne 0]
+if [ $test_archive -eq 0 ] && [ $test_artifact -eq 0]
 then
     vagrant up
     (
